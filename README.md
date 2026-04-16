@@ -189,9 +189,27 @@ Automated checks run on pull requests to `main` through:
 
 These checks validate docs/workflows and, once app code is added, automatically run lint/test/build for `client`, `server`, and `ai-ml` when their dependency manifests exist.
 
-## Current Repository Status
 
-This repository currently includes a scalable folder scaffold for frontend, backend, AI/ML, and docs. Implementation code can now be added module-by-module while preserving clear boundaries.
+## Available Endpoints
+
+Base backend URL:
+
+- `http://localhost:5000`
+
+Health:
+
+- `GET /health`
+
+Authentication:
+
+- `POST /api/auth/register`
+
+Resume APIs:
+
+- `POST /api/resume/upload`
+- `POST /api/resume/analyze`
+- `GET /api/resume/result/:id`
+
 
 ## 🚀 Running the Project
 
@@ -211,12 +229,23 @@ npm install
 npm run dev
 ```
 
-### Health Check
+Server environment variables (create `server/.env` from `server/example.env`):
 
-Open: http://localhost:5000/health
-Expected response:
+- `MONGO_URI` or `MONGODB_URI`
+- `PORT` (backend default: `5000`)
+- `JWT_SECRET` (required for JWT registration)
+- `JWT_EXPIRES_IN` (optional, default is `7d`)
 
-```json
-{ "status": "OK" }
+Example local development values:
+
+- `JWT_SECRET=skillsphere_dev_jwt_secret_1234567890abcdef`
+- `JWT_EXPIRES_IN=7d`
+
+
 ```
+
+
+
+
+
 
