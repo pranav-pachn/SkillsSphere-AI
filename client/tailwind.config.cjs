@@ -23,6 +23,8 @@ module.exports = {
           800: "#3730a3",
           900: "#312e81",
         },
+        primary: "#6366f1", // Same as brand-500
+        "dark-bg": "#0d1117",
       },
       animation: {
         spin: "spin 0.75s linear infinite",

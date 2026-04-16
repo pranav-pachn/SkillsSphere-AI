@@ -29,7 +29,10 @@ SkillSphere AI aims to simplify the path from learning to hiring by giving users
    Real-time learning sessions with video, chat, and collaboration.
 
 2. **AI Resume Analyzer**  
-   Resume scoring with improvement suggestions.
+   Resume scoring with improvement suggestions. (Route: `/resume-analyzer`)
+   - Drag & Drop upload
+   - Detailed scoring dashboard
+   - Missing keyword identification
 
 3. **Resume vs Job Description Matcher**  
    ML-assisted comparison between candidate profile and role requirements.
@@ -86,6 +89,9 @@ SkillSphere-AI/
 │       │   │       └── ComponentDemo.jsx  # Form component showcase (route: /demo)
 │       │   ├── classrooms/          # Live class UI, chat, collaboration
 │       │   ├── resume-analyzer/     # Resume upload, scoring, suggestions
+│       │   │   ├── components/      # UI components (DragDropUpload, AnalysisResult)
+│       │   │   ├── pages/           # Main page (ResumeAnalyzerPage)
+│       │   │   └── services/        # Logic layer (resumeService)
 │       │   ├── job-matcher/         # Resume-to-JD matching UI and results
 │       │   ├── mock-interview/      # Interview sessions and feedback views
 │       │   └── dashboard/           # Skill/performance analytics UI
