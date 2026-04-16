@@ -8,9 +8,11 @@ const ResumeAnalyzerPage = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileUpload = async (file) => {
     setLoading(true);
+    setSelectedFile(file);
     setError(null);
     try {
       const data = await analyzeResume(file);
@@ -25,6 +27,7 @@ const ResumeAnalyzerPage = () => {
 
   const resetAnalyzer = () => {
     setResult(null);
+    setSelectedFile(null);
     setError(null);
   };
 
@@ -66,7 +69,11 @@ const ResumeAnalyzerPage = () => {
                 </button>
               </div>
             ) : result ? (
-              <AnalysisResult result={result} onReset={resetAnalyzer} />
+              <AnalysisResult 
+                result={result} 
+                file={selectedFile} 
+                onReset={resetAnalyzer} 
+              />
             ) : (
               <DragDropUpload onFileUpload={handleFileUpload} />
             )}
