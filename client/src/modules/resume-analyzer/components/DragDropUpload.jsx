@@ -49,9 +49,25 @@ const DragDropUpload = ({ onFileUpload }) => {
     [onFileUpload]
   );
 
+  const handlePaste = useCallback(
+    (e) => {
+      const items = e.clipboardData.items;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].kind === "file") {
+          const file = items[i].getAsFile();
+          setSelectedFile(file);
+          onFileUpload(file);
+          break;
+        }
+      }
+    },
+    [onFileUpload]
+  );
+
   return (
     <div
-      className={`relative w-full p-8 border-2 border-dashed rounded-xl transition-all duration-300 ease-in-out flex flex-col items-center justify-center space-y-4 ${
+      tabIndex="0"
+      className={`relative w-full p-8 border-2 border-dashed rounded-xl transition-all duration-300 ease-in-out flex flex-col items-center justify-center space-y-4 focus:outline-none focus:ring-2 focus:ring-primary/50 ${
         isDragActive
           ? "border-primary bg-primary/5 scale-[1.02]"
           : "border-gray-600 bg-dark-bg/50 hover:bg-dark-bg/80 hover:border-gray-500"
@@ -60,6 +76,7 @@ const DragDropUpload = ({ onFileUpload }) => {
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
+      onPaste={handlePaste}
     >
       <div className="p-4 rounded-full bg-primary/10 mb-2">
         <UploadCloud className="w-10 h-10 text-primary" />
