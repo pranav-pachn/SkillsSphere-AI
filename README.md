@@ -115,9 +115,7 @@ SkillSphere-AI/
 │   │   │   │   ├── components/
 │   │   │   │   │   └── ComponentDemo.jsx
 │   │   │   │   ├── Login.jsx
-│   │   │   │   ├── login.css
-│   │   │   │   ├── Register.jsx
-│   │   │   │   └── register.css
+│   │   │   │   └── Register.jsx
 │   │   │   ├── classrooms/
 │   │   │   ├── dashboard/
 │   │   │   ├── job-matcher/
