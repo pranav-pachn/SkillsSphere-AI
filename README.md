@@ -189,7 +189,6 @@ Automated checks run on pull requests to `main` through:
 
 These checks validate docs/workflows and, once app code is added, automatically run lint/test/build for `client`, `server`, and `ai-ml` when their dependency manifests exist.
 
-## Current Repository Status
 
 This repository includes a scalable folder scaffold and now has Issue #40 implemented: a reusable `ai-ml/evaluators/skillEvaluator.js` with tests, integrated into `POST /resumes/analyze` to compare resume skills vs job skills and return a transparent `skillMatch` result.
 ```md
@@ -217,12 +216,23 @@ npm install
 npm run dev
 ```
 
-### Health Check
+Server environment variables (create `server/.env` from `server/example.env`):
 
-Open: http://localhost:5000/health
-Expected response:
+- `MONGO_URI` or `MONGODB_URI`
+- `PORT` (backend default: `5000`)
+- `JWT_SECRET` (required for JWT registration)
+- `JWT_EXPIRES_IN` (optional, default is `7d`)
 
-```json
-{ "status": "OK" }
+Example local development values:
+
+- `JWT_SECRET=skillsphere_dev_jwt_secret_1234567890abcdef`
+- `JWT_EXPIRES_IN=7d`
+
+
 ```
+
+
+
+
+
 
