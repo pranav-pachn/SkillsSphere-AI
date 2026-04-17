@@ -153,6 +153,109 @@ SkillSphere-AI/
 │   └── features/                    # Feature-level functional documentation
 │
 └── README.md                        # Project overview for contributors
+│   ├── evaluators/
+│   │   └── __tests__/
+│   │       └── skillEvaluator.test.js
+│   ├── interview-feedback/
+│   ├── jd-matching/
+│   ├── resume-analysis/
+│   └── shared/
+├── client/
+│   ├── public/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── App.css
+│   │   │   ├── App.jsx
+│   │   │   ├── index.css
+│   │   │   └── main.jsx
+│   │   ├── assets/
+│   │   ├── modules/
+│   │   │   ├── auth/
+│   │   │   │   ├── components/
+│   │   │   │   │   └── ComponentDemo.jsx
+│   │   │   │   ├── Login.jsx
+│   │   │   │   └── Register.jsx
+│   │   │   ├── classrooms/
+│   │   │   ├── dashboard/
+│   │   │   ├── job-matcher/
+│   │   │   ├── landing/
+│   │   │   │   ├── LandingPage.jsx
+│   │   │   │   └── components/
+│   │   │   │       ├── css/
+│   │   │   │       └── jsx/
+│   │   │   ├── mock-interview/
+│   │   │   └── resume-analyzer/
+│   │   │       ├── components/
+│   │   │       │   ├── AnalysisResult.jsx
+│   │   │       │   └── DragDropUpload.jsx
+│   │   │       ├── pages/
+│   │   │       │   └── ResumeAnalyzerPage.jsx
+│   │   │       └── services/
+│   │   │           └── resumeService.js
+│   │   ├── services/
+│   │   ├── shared/
+│   │   │   ├── components/
+│   │   │   │   ├── Button.jsx
+│   │   │   │   ├── Input.jsx
+│   │   │   │   ├── Select.jsx
+│   │   │   │   └── index.js
+│   │   │   └── landing_components/
+│   │   │       ├── Button.css
+│   │   │       ├── Button.jsx
+│   │   │       ├── Card.css
+│   │   │       ├── Card.jsx
+│   │   │       ├── Navbar.css
+│   │   │       └── Navbar.jsx
+│   │   └── utils/
+│   ├── index.html
+│   ├── package.json
+│   ├── postcss.config.cjs
+│   ├── tailwind.config.cjs
+│   └── vite.config.js
+├── docs/
+│   ├── api/
+│   ├── architecture/
+│   ├── features/
+│   ├── PROJECT_STRUCTURE.md
+│   └── QUALITY_GATES.md
+├── server/
+│   ├── src/
+│   │   ├── app/
+│   │   ├── config/
+│   │   ├── database/
+│   │   │   ├── db.js
+│   │   │   └── models/
+│   │   │       ├── Resume.js    
+│   │   │       └── User.js
+│   │   ├── integrations/
+│   │   ├── middleware/
+│   │   │   └── uploadResume.js
+│   │   ├── modules/
+│   │   │   ├── analytics/
+│   │   │   ├── auth/
+│   │   │   │   ├── controller.js
+│   │   │   │   ├── routes.js
+│   │   │   │   └── service.js
+│   │   │   ├── classrooms/
+│   │   │   ├── interviews/
+│   │   │   ├── matching/
+│   │   │   ├── resumes/
+│   │   │   │   ├── controller.js
+│   │   │   │   └── routes.js
+│   │   │   └── users/
+│   │   ├── uploads/
+│   │   ├── utils/
+│   │   │   └── parseResume.js
+│   │   └── validations/
+│   │       └── authValidation.js
+│   ├── example.env
+│   ├── index.js
+│   └── package.json
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── README.md
+└── SECURITY.md
 ```
 
 ## API Endpoints (Implemented)
