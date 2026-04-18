@@ -1,6 +1,9 @@
 import { validateRegisterInput } from "../../validations/authValidation.js";
-import { registerUserAndIssueToken } from "./service.js";
+import { registerUserAndIssueToken, verifyGoogleToken } from "./service.js";
+import User from "../../database/models/User.js";
+import jwt from "jsonwebtoken";
 
+// 📝 Register User
 export const register = async (req, res) => {
   const validation = validateRegisterInput(req.body);
 
@@ -39,6 +42,69 @@ export const register = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Unable to register user right now"
+    });
+  }
+};
+
+// 🔐 Google Login
+export const googleLogin = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    // ❌ No token provided
+    if (!token) {
+      return res.status(400).json({
+        success: false,
+        message: "Google token is required",
+      });
+    }
+
+    // ✅ Verify Google token
+    const googleUser = await verifyGoogleToken(token);
+
+    // 🔍 Check if user exists
+    let user = await User.findOne({ email: googleUser.email });
+
+    // 🟢 Create new user if not exists
+    if (!user) {
+      user = await User.create({
+        name: googleUser.name,
+        email: googleUser.email,
+        profilePic: googleUser.picture,
+        role: "student", // default role
+        provider: "google",
+      });
+    }
+
+    // 🔐 Generate JWT
+    const jwtToken = jwt.sign(
+      {
+        userId: user._id.toString(),
+        role: user.role,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_EXPIRES_IN || "7d",
+      }
+    );
+
+    // ✅ Send response
+    return res.status(200).json({
+      success: true,
+      message: "Google login successful",
+      token: jwtToken,
+      user: {
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: error.message || "Google authentication failed",
     });
   }
 };

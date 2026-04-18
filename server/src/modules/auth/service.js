@@ -1,9 +1,14 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../../database/models/User.js";
+import { OAuth2Client } from "google-auth-library";
 
 const SALT_ROUNDS = 12;
 
+// Google OAuth client
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+// 🔐 JWT generator
 const buildAuthToken = (user) => {
   if (!process.env.JWT_SECRET) {
     const error = new Error("Missing JWT_SECRET in environment variables");
@@ -14,16 +19,22 @@ const buildAuthToken = (user) => {
   return jwt.sign(
     {
       userId: user._id.toString(),
-      role: user.role
+      role: user.role,
     },
     process.env.JWT_SECRET,
     {
-      expiresIn: process.env.JWT_EXPIRES_IN || "7d"
+      expiresIn: process.env.JWT_EXPIRES_IN || "7d",
     }
   );
 };
 
-export const registerUserAndIssueToken = async ({ name, email, password, role }) => {
+// 📝 Register user
+export const registerUserAndIssueToken = async ({
+  name,
+  email,
+  password,
+  role,
+}) => {
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
@@ -38,7 +49,7 @@ export const registerUserAndIssueToken = async ({ name, email, password, role })
     name,
     email,
     password: hashedPassword,
-    role
+    role,
   });
 
   const token = buildAuthToken(user);
@@ -50,7 +61,27 @@ export const registerUserAndIssueToken = async ({ name, email, password, role })
       name: user.name,
       email: user.email,
       role: user.role,
-      createdAt: user.createdAt
-    }
+      createdAt: user.createdAt,
+    },
   };
+};
+
+// 🔐 Verify Google Token
+export const verifyGoogleToken = async (token) => {
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    return {
+      email: payload.email,
+      name: payload.name,
+      picture: payload.picture,
+    };
+  } catch (error) {
+    throw new Error("Invalid Google token");
+  }
 };
