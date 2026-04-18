@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Input from "../../shared/components/Input";
+import Button from "../../shared/components/Button";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -11,6 +13,10 @@ const Login = () => {
   const handleChange = (e) => {
     const { id, value } = e.target;
     setForm({ ...form, [id]: value });
+    
+    if (errors[id]) {
+      setErrors({ ...errors, [id]: "" });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -42,44 +48,30 @@ const Login = () => {
             Welcome Back
           </h2>
 
-          {/* Email */}
-          <div className="relative mb-5">
-            <input
-              type="email"
+          <div className="flex flex-col gap-4 mb-4">
+            <Input
               id="email"
-              placeholder=" "
+              type="email"
+              label="Email"
+              placeholder="Enter your email"
               value={form.email}
               onChange={handleChange}
-              className="peer w-full p-3 rounded-lg bg-transparent border border-white/20 text-white outline-none focus:border-blue-400 text-sm transition-colors"
+              error={errors.email}
             />
-            <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm transition-all pointer-events-none peer-focus:-top-2 peer-focus:text-[12px] peer-focus:text-blue-400 peer-[:not(:placeholder-shown)]:-top-2 peer-[:not(:placeholder-shown)]:text-[12px] peer-[:not(:placeholder-shown)]:text-blue-400">
-              Email
-            </label>
-          </div>
-          {errors.email && (
-            <p className="text-red-400 text-xs -mt-2 mb-3">{errors.email}</p>
-          )}
 
-          {/* Password */}
-          <div className="relative mb-5">
-            <input
-              type="password"
+            <Input
               id="password"
-              placeholder=" "
+              type="password"
+              label="Password"
+              placeholder="Enter your password"
               value={form.password}
               onChange={handleChange}
-              className="peer w-full p-3 rounded-lg bg-transparent border border-white/20 text-white outline-none focus:border-blue-400 text-sm transition-colors"
+              error={errors.password}
             />
-            <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm transition-all pointer-events-none peer-focus:-top-2 peer-focus:text-[12px] peer-focus:text-blue-400 peer-[:not(:placeholder-shown)]:-top-2 peer-[:not(:placeholder-shown)]:text-[12px] peer-[:not(:placeholder-shown)]:text-blue-400">
-              Password
-            </label>
           </div>
-          {errors.password && (
-            <p className="text-red-400 text-xs -mt-2 mb-3">{errors.password}</p>
-          )}
 
           {/* Options */}
-          <div className="flex justify-between items-center text-[14px] text-slate-400 mb-4">
+          <div className="flex justify-between items-center text-[14px] text-slate-400 mb-4 px-1">
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" className="accent-blue-500" /> Remember me
             </label>
@@ -89,12 +81,16 @@ const Login = () => {
           </div>
 
           {/* Button */}
-          <button className="w-full mt-2 p-3 rounded-xl border-none bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold text-[15px] cursor-pointer transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)]">
+          <Button 
+            type="submit"
+            fullWidth
+            className="mt-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 border-none font-bold text-[15px] hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition-all duration-300"
+          >
             Login
-          </button>
+          </Button>
 
           {/* Footer */}
-          <p className="text-center mt-4 text-slate-400 text-[14px]">
+          <p className="text-center mt-5 text-slate-400 text-[14px]">
             Don’t have an account?{" "}
             <span className="text-blue-400 cursor-pointer hover:underline">
               Sign up
