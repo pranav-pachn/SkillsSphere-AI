@@ -69,6 +69,7 @@ Scaffolded placeholders:
 Implemented:
 
 - Skill evaluator test coverage in `evaluators/__tests__/skillEvaluator.test.js`
+- Keyword evaluator test coverage in `evaluators/__tests__/keywordEvaluator.test.js`
 
 Scaffolded placeholders:
 
@@ -82,7 +83,7 @@ Scaffolded placeholders:
 - `GET /health`: server health check
 - `POST /api/auth/register`: user registration and JWT issuance
 - `POST /api/resume/upload`: upload resume file
-- `POST /api/resume/analyze`: parse PDF resume and optional skill match
+- `POST /api/resume/analyze`: parse PDF resume, optional skill match, optional keyword relevance (`jobDescription`)
 - `GET /api/resume/result/:id`: placeholder result retrieval endpoint
 - `GET /uploads/:filename`: static file access for uploaded files
 

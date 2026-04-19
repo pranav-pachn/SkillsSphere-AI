@@ -148,5 +148,6 @@ export const parseResume = async (filePath) => {
     portfolio: portfolios[0] || null,
     keywords: extractSkills(text),
     extractedTextLength: text.length,
+    resumeText: text,
   };
 };
