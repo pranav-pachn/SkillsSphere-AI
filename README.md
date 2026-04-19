@@ -374,6 +374,37 @@ cd server
 npm install
 npm run dev
 ```
+## 🔐 Environment Variables Setup
+
+Create a `.env` file inside the `server/` folder and add:
+
+PORT=5000
+MONGO_URI=your_mongodb_uri
+
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRES_IN=7d
+
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
+
+EMAIL_SERVICE_MODE=console
+EMAIL_HOST=smtp.mailtrap.io
+EMAIL_PORT=2525
+EMAIL_USER=your_smtp_username
+EMAIL_PASS=your_smtp_password
+ ## 🔐 Google OAuth Setup
+
+1. Go to Google Cloud Console  
+2. Create a new project  
+3. Enable OAuth APIs  
+4. Create OAuth credentials  
+5. Add this redirect URI:
+
+http://localhost:5000/api/auth/google/callback
+
+6. Copy Client ID and Client Secret  
+7. Add them to your `.env` file  
 
 Server environment variables (create `server/.env` from `server/example.env`):
 
