@@ -7,6 +7,7 @@ import Login from "../modules/auth/Login";
 import Register from "../modules/auth/Register";
 import ResetPassword from "../modules/auth/ResetPassword";
 import VerifyEmail from "../modules/auth/VerifyEmail";
+import ProfilePage from "../modules/profile/ProfilePage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </div>
   );
