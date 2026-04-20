@@ -33,6 +33,22 @@ const userSchema = new mongoose.Schema(
 
     profilePic: {
       type: String,
+      default: null,
+    },
+
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+
+    verificationToken: { type: String, default: null },
+    verificationTokenExpires: { type: Date, default: null },
+    resetPasswordToken: { type: String, default: null },
+    resetPasswordExpires: { type: Date, default: null },
+
+    otpAttempts: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }
