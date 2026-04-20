@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../../database/models/User.js";
+import { OAuth2Client } from "google-auth-library";
 import { sendOTP } from "../../utils/emailService.js";
 import AppError from "../../utils/AppError.js";
 
@@ -8,6 +9,10 @@ const SALT_ROUNDS = 12;
 const OTP_EXPIRY_MINUTES = 5;
 const MAX_OTP_ATTEMPTS = 5;
 
+// Google OAuth client
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+// 🔐 JWT generator
 const buildAuthToken = (user) => {
   if (!process.env.JWT_SECRET) {
     throw new AppError("Missing JWT_SECRET in environment variables", 500);
@@ -20,10 +25,12 @@ const buildAuthToken = (user) => {
   );
 };
 
+// 🔢 Generate OTP
 const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
+// 📝 Register user
 export const registerUserAndIssueToken = async ({ name, email, password, role }) => {
   const existingUser = await User.findOne({ email });
 
@@ -48,12 +55,19 @@ export const registerUserAndIssueToken = async ({ name, email, password, role })
   await sendOTP(email, otp, "verification");
 
   const token = buildAuthToken(user);
+
   return {
     token,
-    user: { id: user._id.toString(), name: user.name, email: user.email, isVerified: false }
+    user: {
+      id: user._id.toString(),
+      name: user.name,
+      email: user.email,
+      isVerified: false,
+    },
   };
 };
 
+// 📧 Verify email
 export const verifyUserEmail = async (email, otp) => {
   const user = await User.findOne({ email });
 
@@ -83,6 +97,7 @@ export const verifyUserEmail = async (email, otp) => {
   return { success: true, message: "Email verified successfully" };
 };
 
+// 🔑 Forgot password
 export const forgotPasswordRequest = async (email) => {
   const user = await User.findOne({ email });
 
@@ -103,6 +118,7 @@ export const forgotPasswordRequest = async (email) => {
   return { success: true, message: "A reset code has been sent to your email." };
 };
 
+// 🔄 Reset password
 export const resetUserPassword = async (email, otp, newPassword) => {
   const user = await User.findOne({ email });
 
@@ -124,7 +140,7 @@ export const resetUserPassword = async (email, otp, newPassword) => {
   }
 
   const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
-  
+
   user.password = hashedPassword;
   user.resetPasswordToken = undefined;
   user.resetPasswordExpires = undefined;
@@ -134,6 +150,7 @@ export const resetUserPassword = async (email, otp, newPassword) => {
   return { success: true, message: "Password reset successfully" };
 };
 
+// 🔁 Resend OTP
 export const resendUserOTP = async (email) => {
   const user = await User.findOne({ email });
 
@@ -156,4 +173,24 @@ export const resendUserOTP = async (email) => {
   await sendOTP(email, otp, "verification");
 
   return { success: true, message: "A new verification code has been sent to your email." };
+};
+
+// 🔐 Google Token Verification (YOUR FEATURE)
+export const verifyGoogleToken = async (token) => {
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    return {
+      email: payload.email,
+      name: payload.name,
+      picture: payload.picture,
+    };
+  } catch (error) {
+    throw new AppError("Invalid Google token", 401);
+  }
 };

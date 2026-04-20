@@ -1,37 +1,54 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
+
     email: {
       type: String,
       required: true,
       unique: true,
       lowercase: true,
-      trim: true
+      trim: true,
     },
+
     password: {
       type: String,
-      required: true
+      required: false, // for Google users
     },
+
     role: {
       type: String,
       enum: ["student", "tutor", "recruiter"],
-      default: "student"
+      default: "student",
     },
+
+    provider: {
+      type: String,
+      default: "local", // local or google
+    },
+
+    profilePic: {
+      type: String,
+      default: null,
+    },
+
     isVerified: {
       type: Boolean,
-      default: false
+      default: false,
     },
+
     verificationToken: { type: String, default: null },
     verificationTokenExpires: { type: Date, default: null },
     resetPasswordToken: { type: String, default: null },
     resetPasswordExpires: { type: Date, default: null },
+
     otpAttempts: {
       type: Number,
-      default: 0
+      default: 0,
     },
   },
   { timestamps: true }
