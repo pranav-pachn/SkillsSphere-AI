@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import Input from "../../shared/components/Input";
 import Select from "../../shared/components/Select";
 import Button from "../../shared/components/Button";
-
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../features/auth/authSlice";
 const Register = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -54,19 +55,27 @@ const Register = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate();
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // Registration data ready (no backend call as per requirements)
-      console.log("Register payload:", {
+      const resultAction = await dispatch(registerUser({
         name: form.name,
         email: form.email,
         password: form.password,
         role: form.role,
-      });
+      }));
+
+      if (registerUser.fulfilled.match(resultAction)) {
+        // Redux state automatically updates and sets isAuthenticated to true
+        // Redirect to protected route or keep them here and let another wrapper handle redirection
+        navigate("/resume-analyzer");
+      } else {
+        // Here you can handle the error from the backend if it reject
+        setErrors({ ...errors, form: resultAction.payload || "Registration Failed" });
+      }
     }
   };
 
