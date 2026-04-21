@@ -1,5 +1,5 @@
-import Button from "../../../../shared/landing/Button";
-import "../../styles/CTA.css";
+import Button from "../../../shared/landing/Button";
+import "../styles/CTA.css";
 
 const CTA = () => {
   return (

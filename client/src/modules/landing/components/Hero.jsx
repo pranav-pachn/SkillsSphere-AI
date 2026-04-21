@@ -1,5 +1,5 @@
-import Button from "../../../../shared/landing/Button";
-import "../../styles/Hero.css";
+import Button from "../../../shared/landing/Button";
+import "../styles/Hero.css";
 
 const Hero = () => {
   return (

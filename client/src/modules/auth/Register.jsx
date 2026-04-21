@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../../features/auth/authSlice";
+import { useToast } from "../../shared/components";
+import Button from "../../shared/components/Button";
 import Input from "../../shared/components/Input";
 import Select from "../../shared/components/Select";
-import Button from "../../shared/components/Button";
-import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../../features/auth/authSlice";
-const Register = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-import { useToast } from "../../shared/components";
 
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth);
   const { success, warning } = useToast();
 
   const [form, setForm] = useState({
@@ -67,28 +66,29 @@ const Register = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
-      warning("Please fix the highlighted registration fields before submitting.");
+      warning(
+        "Please fix the highlighted registration fields before submitting.",
+      );
       return;
     }
 
-    if (Object.keys(newErrors).length === 0) {
-      const resultAction = await dispatch(registerUser({
+    const resultAction = await dispatch(
+      registerUser({
         name: form.name,
         email: form.email,
         password: form.password,
         role: form.role,
-      }));
+      }),
+    );
 
-      if (registerUser.fulfilled.match(resultAction)) {
-        // Redux state automatically updates and sets isAuthenticated to true
-        // Redirect to protected route or keep them here and let another wrapper handle redirection
-        navigate("/resume-analyzer");
-      } else {
-        // Here you can handle the error from the backend if it reject
-        setErrors({ ...errors, form: resultAction.payload || "Registration Failed" });
-      }
-      });
+    if (registerUser.fulfilled.match(resultAction)) {
       success("Account created successfully.");
+      navigate("/resume-analyzer");
+    } else {
+      setErrors({
+        ...errors,
+        form: resultAction.payload || "Registration Failed",
+      });
     }
   };
 
@@ -166,10 +166,17 @@ const Register = () => {
           <Button
             type="submit"
             fullWidth
+            disabled={loading}
             className="mt-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 border-none font-bold text-[15px] hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition-all duration-300"
           >
-            Sign Up
+            {loading ? "Creating Account..." : "Sign Up"}
           </Button>
+
+          {errors.form && (
+            <p className="text-red-400 text-center mt-3 text-sm">
+              {errors.form}
+            </p>
+          )}
 
           {/* Footer */}
           <p className="text-center mt-5 text-slate-400 text-[14px]">

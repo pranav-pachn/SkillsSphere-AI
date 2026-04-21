@@ -1,6 +1,6 @@
 import { FileSearch, FileText, LineChart, Mic, Video } from "lucide-react";
-import Card from "../../../../shared/landing/Card";
-import "../../styles/Features.css";
+import Card from "../../../shared/landing/Card";
+import "../styles/Features.css";
 
 const Features = () => {
   const featuresList = [

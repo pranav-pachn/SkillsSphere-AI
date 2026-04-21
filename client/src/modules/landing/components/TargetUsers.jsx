@@ -1,6 +1,6 @@
 import { BookOpen, Briefcase, Users } from "lucide-react";
-import Card from "../../../../shared/landing/Card";
-import "../../styles/TargetUsers.css";
+import Card from "../../../shared/landing/Card";
+import "../styles/TargetUsers.css";
 
 const TargetUsers = () => {
   const users = [
