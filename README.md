@@ -93,180 +93,12 @@ SkillSphere AI aims to simplify the path from learning to hiring by giving users
 The following structure keeps the project modular and easy to scale for new contributors:
 
 ```text
-SkillSphere-AI/ (Simplified Structure)
-├── client/
-│       │   ├── App.jsx              # Root router (BrowserRouter + Routes)
-│       │   └── Home.jsx             # Placeholder home / landing page
-│       ├── modules/                 # Feature-based modules
-│       │   ├── auth/                # Login, registration, user session flows
-│       │   │   └── components/
-│       │   │       └── ComponentDemo.jsx  # Form component showcase (route: /demo)
-│       │   ├── classrooms/          # Live class UI, chat, collaboration
-│       │   ├── resume-analyzer/     # Resume upload, scoring, suggestions
-│       │   ├── job-matcher/         # Resume-to-JD matching UI and results
-│       │   ├── mock-interview/      # Interview sessions and feedback views
-│       │   └── dashboard/           # Skill/performance analytics UI
-│       ├── shared/                  # Reusable UI components and hooks
-│       │   ├── components/          # Reusable form & UI primitives
-│       │   │   ├── Input.jsx        # Text input with label, error, icons, disabled
-│       │   │   ├── Button.jsx       # Button with variants, sizes, loading state
-│       │   │   ├── Select.jsx       # Dropdown with label, error, disabled
-│       │   │   └── index.js         # Barrel export for all shared components
-│       │   └── ui/                  # Reserved for layout/compound components
-│       ├── services/                # API communication layer
-│       ├── utils/                   # Frontend helper utilities
-│       └── assets/                  # Images, icons, static resources
-│
-├── server/                          # Node.js + Express backend
-│   ├── index.js                     # Main server entry point
-│   ├── example.env                  # Example environment variables
-│   ├── package.json                 # Backend dependencies and scripts
-│   └── src/
-│       ├── config/                  # Environment and app configuration
-│       ├── modules/                 # Domain-based backend modules
-│       │   ├── auth/                # Authentication and authorization
-│       │   ├── users/               # Student, tutor, recruiter profiles
-│       │   ├── classrooms/          # Live class/session management
-│       │   ├── resumes/             # Resume parsing and storage handling
-│       │   │   ├── controller.js    # Resume upload, analyze, result endpoints
-│       │   │   └── routes.js        # Resume-related API routes
-│       │   ├── matching/            # Resume vs JD matching logic
-│       │   ├── interviews/          # Mock interview orchestration
-│       │   └── analytics/           # Skill tracking and reporting
-│       ├── middleware/              # Request validation, auth guards, etc.
-│       │   └── uploadResume.js      # Multer middleware for resume uploads
-│       ├── integrations/            # Third-party services (AI providers, etc.)
-│       ├── database/                # Database models/schemas and repositories
-│       │   └── db.js                # MongoDB connection setup
-│       ├── uploads/                 # Uploaded resume files
-│       ├── utils/                   # Backend helper utilities
-│       │   └── parseResume.js       # PDF parsing and candidate data extraction
-│       └── app/                     # App bootstrap, routes, and server entry
-│
-├── ai-ml/
-│   ├── evaluators/                  # AI/ML evaluation logic for resumes, matching, interviews
-│   │   ├── skillEvaluator.js        # Resume vs job skill comparison logic
-│   │   └── keywordEvaluator.js      # JD keyword relevance vs resume text
-│   │   ├── experienceEvaluator.js   # Candidate vs JD experience-level evaluation
-│   │       
-│   ├── resume-analysis/             # Resume scoring and feedback pipelines
-│   ├── jd-matching/                 # Similarity/matching workflows
-│   ├── interview-feedback/          # Interview evaluation logic
-│   └── shared/                      # Common data processing utilities
-│
-├── docs/                            # Product and contributor documentation
-│   ├── architecture/                # System architecture explanations
-│   ├── api/                         # API behavior and endpoint documentation
-│   └── features/                    # Feature-level functional documentation
-│
-└── README.md                        # Project overview for contributors
-│   ├── evaluators/
-│   │   └── __tests__/
-│   │       └── skillEvaluator.test.js
-│   ├── interview-feedback/
-│   ├── jd-matching/
-│   ├── resume-analysis/
-│   └── shared/
-├── client/
-│   ├── public/
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── App.css
-│   │   │   ├── App.jsx
-│   │   │   ├── index.css
-│   │   │   └── main.jsx
-│   │   ├── assets/
-│   │   ├── modules/
-│   │   │   ├── auth/
-│   │   │   │   ├── components/
-│   │   │   │   │   └── ComponentDemo.jsx
-│   │   │   │   ├── Login.jsx
-│   │   │   │   └── Register.jsx
-│   │   │   ├── classrooms/
-│   │   │   ├── dashboard/
-│   │   │   ├── job-matcher/
-│   │   │   ├── landing/
-│   │   │   │   ├── LandingPage.jsx
-│   │   │   │   └── components/
-│   │   │   │       ├── css/
-│   │   │   │       └── jsx/
-│   │   │   ├── mock-interview/
-│   │   │   ├── profile/
-│   │   │   │   ├── ProfilePage.jsx
-│   │   │   │   └── components/
-│   │   │   │       └── ProfileField.jsx
-│   │   │   └── resume-analyzer/
-│   │   │       ├── components/
-│   │   │       │   ├── AnalysisResult.jsx
-│   │   │       │   └── DragDropUpload.jsx
-│   │   │       ├── pages/
-│   │   │       │   └── ResumeAnalyzerPage.jsx
-│   │   │       └── services/
-│   │   │           └── resumeService.js
-│   │   ├── services/
-│   │   ├── shared/
-│   │   │   ├── components/
-│   │   │   │   ├── Button.jsx
-│   │   │   │   ├── Input.jsx
-│   │   │   │   ├── Select.jsx
-│   │   │   │   └── index.js
-│   │   │   └── landing_components/
-│   │   │       ├── Button.css
-│   │   │       ├── Button.jsx
-│   │   │       ├── Card.css
-│   │   │       ├── Card.jsx
-│   │   │       ├── Navbar.css
-│   │   │       └── Navbar.jsx
-│   │   └── utils/
-│   ├── index.html
-│   ├── package.json
-│   ├── postcss.config.cjs
-│   ├── tailwind.config.cjs
-│   └── vite.config.js
-├── docs/
-│   ├── api/
-│   ├── architecture/
-│   ├── features/
-│   ├── PROJECT_STRUCTURE.md
-│   └── QUALITY_GATES.md
-├── server/
-│   ├── src/
-│   │   ├── app/
-│   │   ├── config/
-│   │   ├── database/
-│   │   │   ├── db.js
-│   │   │   └── models/
-│   │   │       ├── Resume.js    
-│   │   │       └── User.js
-│   │   ├── integrations/
-│   │   ├── middleware/
-│   │   │   └── uploadResume.js
-│   │   ├── modules/
-│   │   │   ├── analytics/
-│   │   │   ├── auth/
-│   │   │   │   ├── controller.js
-│   │   │   │   ├── routes.js
-│   │   │   │   └── service.js
-│   │   │   ├── classrooms/
-│   │   │   ├── interviews/
-│   │   │   ├── matching/
-│   │   │   ├── resumes/
-│   │   │   │   ├── controller.js
-│   │   │   │   └── routes.js
-│   │   │   └── users/
-│   │   ├── uploads/
-│   │   ├── utils/
-│   │   │   └── parseResume.js
-│   │   └── validations/
-│   │       └── authValidation.js
-│   ├── example.env
-│   ├── index.js
-│   └── package.json
-├── CODE_OF_CONDUCT.md
-├── CONTRIBUTING.md
-├── LICENSE
-├── README.md
-└── SECURITY.md
+SkillSphere-AI/
+├── client/                          # React frontend
+├── server/                          # Express backend
+├── ai-ml/                           # AI/ML intelligence layer
+├── docs/                            # Documentation
+└── ...                              # Configuration and root files
 ```
 
 ## API Endpoints (Implemented)
@@ -384,6 +216,7 @@ cd server
 npm install
 npm run dev
 ```
+
 ## 🔐 Environment Variables Setup
 
 Create a `.env` file inside the `server/` folder and add:
@@ -403,18 +236,19 @@ EMAIL_HOST=smtp.mailtrap.io
 EMAIL_PORT=2525
 EMAIL_USER=your_smtp_username
 EMAIL_PASS=your_smtp_password
- ## 🔐 Google OAuth Setup
 
-1. Go to Google Cloud Console  
-2. Create a new project  
-3. Enable OAuth APIs  
-4. Create OAuth credentials  
+## 🔐 Google OAuth Setup
+
+1. Go to Google Cloud Console
+2. Create a new project
+3. Enable OAuth APIs
+4. Create OAuth credentials
 5. Add this redirect URI:
 
 http://localhost:5000/api/auth/google/callback
 
-6. Copy Client ID and Client Secret  
-7. Add them to your `.env` file  
+6. Copy Client ID and Client Secret
+7. Add them to your `.env` file
 
 Server environment variables (create `server/.env` from `server/example.env`):
 

@@ -1,6 +1,5 @@
-import React from 'react';
-import Button from '../../../../shared/landing_components/Button';
-import '../css/CTA.css';
+import Button from "../../../shared/landing/Button";
+import "../styles/CTA.css";
 
 const CTA = () => {
   return (
@@ -10,10 +9,13 @@ const CTA = () => {
           <div className="cta-glow"></div>
           <h2 className="cta-title">Ready to transform your journey?</h2>
           <p className="cta-subtitle">
-            Join thousands of students, tutors, and recruiters already active on SkillsSphere-AI.
+            Join thousands of students, tutors, and recruiters already active on
+            SkillsSphere-AI.
           </p>
           <div className="cta-actions">
-            <Button variant="primary" size="lg" to="/register">Create Free Account</Button>
+            <Button variant="primary" size="lg" to="/register">
+              Create Free Account
+            </Button>
           </div>
         </div>
       </div>

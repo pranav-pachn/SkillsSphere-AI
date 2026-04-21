@@ -1,13 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { CheckCircle2, ChevronRight, AlertCircle, Sparkles, FileText, Download, Eye } from "lucide-react";
-import Button from "../../../shared/landing_components/Button";
+import {
+  AlertCircle,
+  CheckCircle2,
+  ChevronRight,
+  Download,
+  Eye,
+  FileText,
+  Sparkles,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import Button from "../../../shared/landing/Button";
 
 const AnalysisResult = ({ result, file, onReset }) => {
   const { score, suggestions, missing_keywords } = result;
   const [previewUrl, setPreviewUrl] = useState(null);
 
   useEffect(() => {
-    if (file && (file.type === "application/pdf" || file.name.toLowerCase().endsWith('.pdf'))) {
+    if (
+      file &&
+      (file.type === "application/pdf" ||
+        file.name.toLowerCase().endsWith(".pdf"))
+    ) {
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
       return () => URL.revokeObjectURL(url);
@@ -21,8 +33,10 @@ const AnalysisResult = ({ result, file, onReset }) => {
     return "text-red-400";
   };
 
-  const isPDF = file?.type === "application/pdf" || file?.name.toLowerCase().endsWith('.pdf');
-  
+  const isPDF =
+    file?.type === "application/pdf" ||
+    file?.name.toLowerCase().endsWith(".pdf");
+
   const getFileExtension = () => {
     if (file?.name.endsWith(".docx")) return "DOCX";
     if (file?.name.endsWith(".pdf")) return "PDF";
@@ -44,19 +58,25 @@ const AnalysisResult = ({ result, file, onReset }) => {
       {/* Header / Score Section */}
       <div className="bg-surface/80 border border-border rounded-[2rem] p-8 flex flex-col md:row items-center justify-between gap-8 backdrop-blur-sm shadow-2xl relative overflow-hidden group">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        
+
         <div className="relative z-10 flex items-center gap-6">
           <div className="p-4 bg-primary/10 rounded-2xl text-primary border border-primary/20 shadow-inner">
             <Sparkles className="w-10 h-10 animate-pulse" />
           </div>
           <div>
-            <h2 className="text-2xl font-heading font-bold text-text-main">Global Insight Analysis</h2>
-            <p className="text-text-muted text-sm mt-1">AI-driven evaluation across 50+ industry parameters.</p>
+            <h2 className="text-2xl font-heading font-bold text-text-main">
+              Global Insight Analysis
+            </h2>
+            <p className="text-text-muted text-sm mt-1">
+              AI-driven evaluation across 50+ industry parameters.
+            </p>
           </div>
         </div>
-        
+
         <div className="relative z-10 flex flex-col items-center justify-center bg-dark-bg/40 p-6 rounded-[1.5rem] border border-border/50 min-w-[140px] shadow-2xl">
-          <span className={`text-6xl font-heading font-black tracking-tighter ${getScoreStyles(score)}`}>
+          <span
+            className={`text-6xl font-heading font-black tracking-tighter ${getScoreStyles(score)}`}
+          >
             {score}%
           </span>
           <span className="text-[10px] font-black uppercase text-text-muted mt-2 tracking-[0.25em]">
@@ -74,7 +94,9 @@ const AnalysisResult = ({ result, file, onReset }) => {
               <div className="p-2 bg-secondary/10 rounded-lg">
                 <CheckCircle2 className="w-6 h-6 text-secondary" />
               </div>
-              <h3 className="text-xl font-heading font-bold text-text-main">Strategic Improvements</h3>
+              <h3 className="text-xl font-heading font-bold text-text-main">
+                Strategic Improvements
+              </h3>
             </div>
             <ul className="space-y-5">
               {suggestions.map((suggestion, index) => (
@@ -82,7 +104,9 @@ const AnalysisResult = ({ result, file, onReset }) => {
                   <div className="mt-1.5 bg-primary/10 border border-primary/20 rounded-md p-0.5 group-hover:bg-primary/20 transition-all">
                     <ChevronRight className="w-4 h-4 text-primary transition-transform group-hover:translate-x-1" />
                   </div>
-                  <p className="text-text-main text-[15px] leading-relaxed group-hover:text-white transition-colors">{suggestion}</p>
+                  <p className="text-text-main text-[15px] leading-relaxed group-hover:text-white transition-colors">
+                    {suggestion}
+                  </p>
                 </li>
               ))}
             </ul>
@@ -94,7 +118,9 @@ const AnalysisResult = ({ result, file, onReset }) => {
               <div className="p-2 bg-yellow-400/10 rounded-lg">
                 <AlertCircle className="w-6 h-6 text-yellow-400" />
               </div>
-              <h3 className="text-xl font-heading font-bold text-text-main">Keyword Intelligence</h3>
+              <h3 className="text-xl font-heading font-bold text-text-main">
+                Keyword Intelligence
+              </h3>
             </div>
             <div className="flex flex-wrap gap-2.5">
               {missing_keywords.map((keyword, index) => (
@@ -107,7 +133,8 @@ const AnalysisResult = ({ result, file, onReset }) => {
               ))}
             </div>
             <p className="text-xs text-text-muted mt-6 italic opacity-80 leading-relaxed">
-              * Integrating these keywords naturally into your experience can boost ATS rankings.
+              * Integrating these keywords naturally into your experience can
+              boost ATS rankings.
             </p>
           </div>
         </div>
@@ -120,7 +147,9 @@ const AnalysisResult = ({ result, file, onReset }) => {
                 <div className="p-1.5 bg-primary/10 rounded-md">
                   <FileText className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="text-sm font-heading font-bold text-text-main">Document Viewer</h3>
+                <h3 className="text-sm font-heading font-bold text-text-main">
+                  Document Viewer
+                </h3>
               </div>
               <span className="text-[10px] bg-primary/10 text-primary px-3 py-1.5 rounded-full border border-primary/20 font-black tracking-widest uppercase">
                 {getFileExtension()}
@@ -145,28 +174,31 @@ const AnalysisResult = ({ result, file, onReset }) => {
                       {file?.name}
                     </p>
                     <p className="text-xs text-text-muted max-w-[260px] mx-auto leading-relaxed px-4">
-                      Enhanced preview is dynamic for <span className="text-primary font-bold">PDF documents</span>. 
-                      You can manage your file using the download options.
+                      Enhanced preview is dynamic for{" "}
+                      <span className="text-primary font-bold">
+                        PDF documents
+                      </span>
+                      . You can manage your file using the download options.
                     </p>
                   </div>
                 </div>
               )}
-              
+
               {/* Overlay Actions */}
               <div className="absolute inset-0 bg-dark-bg/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center backdrop-blur-[4px]">
-                 <a 
-                   href={previewUrl || "#"} 
-                   download={file?.name}
-                   className="transform hover:scale-105 transition-transform"
-                 >
-                   <Button variant="primary" size="lg">
-                     <Download className="w-5 h-5 mr-3" />
-                     Download Portfolio
-                   </Button>
-                 </a>
+                <a
+                  href={previewUrl || "#"}
+                  download={file?.name}
+                  className="transform hover:scale-105 transition-transform"
+                >
+                  <Button variant="primary" size="lg">
+                    <Download className="w-5 h-5 mr-3" />
+                    Download Portfolio
+                  </Button>
+                </a>
               </div>
             </div>
-            
+
             <div className="mt-6 flex items-center justify-between px-2">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-secondary rounded-full animate-pulse"></div>

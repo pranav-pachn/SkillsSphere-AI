@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../../features/auth/authSlice";
+import { useToast } from "../../shared/components";
+import Button from "../../shared/components/Button";
 import Input from "../../shared/components/Input";
 import Select from "../../shared/components/Select";
-import Button from "../../shared/components/Button";
 
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth);
+  const { success, warning, error: showError } = useToast();
 
   const [form, setForm] = useState({
     name: "",
@@ -21,14 +27,16 @@ const Register = () => {
     const { id, value } = e.target;
     setForm({ ...form, [id]: value });
 
-    // Clear error for this field when user types
-    if (errors[id]) {
-      setErrors({ ...errors, [id]: "" });
+    if (errors[id] || errors.form) {
+      setErrors({ ...errors, [id]: "", form: "" });
     }
   };
 
   const handleRoleChange = (e) => {
     setForm({ ...form, role: e.target.value });
+    if (errors.role || errors.form) {
+      setErrors({ ...errors, role: "", form: "" });
+    }
   };
 
   const validate = () => {
@@ -54,19 +62,42 @@ const Register = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate();
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      // Registration data ready (no backend call as per requirements)
-      console.log("Register payload:", {
-        name: form.name,
-        email: form.email,
+    if (Object.keys(newErrors).length > 0) {
+      warning(
+        "Please fix the highlighted registration fields before submitting.",
+      );
+      return;
+    }
+
+    const email = form.email.trim().toLowerCase();
+
+    const resultAction = await dispatch(
+      registerUser({
+        name: form.name.trim(),
+        email,
         password: form.password,
         role: form.role,
+      }),
+    );
+
+    if (registerUser.fulfilled.match(resultAction)) {
+      success("Account created. Check your email for the verification code.");
+      navigate(`/verify-email?email=${encodeURIComponent(email)}`, {
+        state: { email },
+        replace: true,
       });
+    } else {
+      const message = resultAction.payload || "Registration failed";
+      setErrors({
+        ...errors,
+        form: message,
+      });
+      showError(message);
     }
   };
 
@@ -100,6 +131,7 @@ const Register = () => {
               value={form.name}
               onChange={handleChange}
               error={errors.name}
+              disabled={loading}
             />
 
             <Input
@@ -110,6 +142,7 @@ const Register = () => {
               value={form.email}
               onChange={handleChange}
               error={errors.email}
+              disabled={loading}
             />
 
             <Input
@@ -120,6 +153,7 @@ const Register = () => {
               value={form.password}
               onChange={handleChange}
               error={errors.password}
+              disabled={loading}
             />
 
             <Input
@@ -130,6 +164,7 @@ const Register = () => {
               value={form.confirmPassword}
               onChange={handleChange}
               error={errors.confirmPassword}
+              disabled={loading}
             />
 
             <Select
@@ -138,16 +173,25 @@ const Register = () => {
               value={form.role}
               onChange={handleRoleChange}
               options={roleOptions}
+              disabled={loading}
             />
           </div>
 
           <Button
             type="submit"
             fullWidth
+            loading={loading}
+            disabled={loading}
             className="mt-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 border-none font-bold text-[15px] hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition-all duration-300"
           >
-            Sign Up
+            {loading ? "Creating Account..." : "Sign Up"}
           </Button>
+
+          {errors.form && (
+            <p className="text-red-400 text-center mt-3 text-sm">
+              {errors.form}
+            </p>
+          )}
 
           {/* Footer */}
           <p className="text-center mt-5 text-slate-400 text-[14px]">
