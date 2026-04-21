@@ -94,110 +94,11 @@ The following structure keeps the project modular and easy to scale for new cont
 
 ```text
 SkillSphere-AI/
-├── ai-ml/
-│   ├── evaluators/
-│   │   ├── __tests__/
-│   │   ├── experienceEvaluator.js
-│   │   ├── keywordEvaluator.js
-│   │   └── skillEvaluator.js
-│   ├── interview-feedback/
-│   ├── jd-matching/
-│   ├── resume-analysis/
-│   └── shared/
-├── client/
-│   ├── public/
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── App.css
-│   │   │   ├── App.jsx
-│   │   │   ├── index.css
-│   │   │   └── main.jsx
-│   │   ├── assets/
-│   │   ├── modules/
-│   │   │   ├── auth/
-│   │   │   │   ├── components/
-│   │   │   │   │   └── ComponentDemo.jsx
-│   │   │   │   ├── Login.jsx
-│   │   │   │   └── Register.jsx
-│   │   │   ├── classrooms/
-│   │   │   ├── dashboard/
-│   │   │   ├── job-matcher/
-│   │   │   ├── landing/
-│   │   │   │   ├── LandingPage.jsx
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── CTA.jsx
-│   │   │   │   │   ├── Features.jsx
-│   │   │   │   │   ├── Hero.jsx
-│   │   │   │   │   └── TargetUsers.jsx
-│   │   │   │   └── styles/
-│   │   │   │       ├── CTA.css
-│   │   │   │       ├── Features.css
-│   │   │   │       ├── Hero.css
-│   │   │   │       └── TargetUsers.css
-│   │   │   ├── mock-interview/
-│   │   │   └── resume-analyzer/
-│   │   │       ├── components/
-│   │   │       │   ├── AnalysisResult.jsx
-│   │   │       │   └── DragDropUpload.jsx
-│   │   │       ├── pages/
-│   │   │       │   └── ResumeAnalyzerPage.jsx
-│   │   │       └── services/
-│   │   │           └── resumeService.js
-│   │   ├── services/
-│   │   ├── shared/
-│   │   │   ├── components/
-│   │   │   │   ├── Button.jsx
-│   │   │   │   ├── Input.jsx
-│   │   │   │   ├── Select.jsx
-│   │   │   │   └── index.js
-│   │   │   └── landing/
-│   │   │       ├── Button.css
-│   │   │       ├── Button.jsx
-│   │   │       ├── Card.css
-│   │   │       ├── Card.jsx
-│   │   │       ├── Navbar.css
-│   │   │       ├── Navbar.jsx
-│   │   │       └── index.js
-│   │   └── utils/
-│   ├── index.html
-│   ├── package.json
-│   ├── postcss.config.cjs
-│   ├── tailwind.config.cjs
-│   └── vite.config.js
-├── docs/
-│   ├── api/
-│   ├── architecture/
-│   ├── features/
-│   ├── PROJECT_STRUCTURE.md
-│   └── QUALITY_GATES.md
-├── server/
-│   ├── example.env
-│   ├── index.js
-│   ├── package.json
-│   └── src/
-│       ├── app/
-│       ├── config/
-│       ├── database/
-│       │   ├── db.js
-│       │   └── models/
-│       ├── integrations/
-│       ├── middleware/
-│       ├── modules/
-│       │   ├── analytics/
-│       │   ├── auth/
-│       │   ├── classrooms/
-│       │   ├── interviews/
-│       │   ├── matching/
-│       │   ├── resumes/
-│       │   └── users/
-│       ├── uploads/
-│       ├── utils/
-│       └── validations/
-├── CODE_OF_CONDUCT.md
-├── CONTRIBUTING.md
-├── LICENSE
-├── README.md
-└── SECURITY.md
+├── client/                          # React frontend
+├── server/                          # Express backend
+├── ai-ml/                           # AI/ML intelligence layer
+├── docs/                            # Documentation
+└── ...                              # Configuration and root files
 ```
 
 ## API Endpoints (Implemented)
@@ -209,6 +110,8 @@ SkillSphere-AI/
 - `POST /api/auth/forgot-password`
 - `POST /api/auth/reset-password`
 - `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/auth/me`
 - `POST /api/resume/upload`
 - `POST /api/resume/analyze`
 - `GET /api/resume/result/:id`
@@ -261,6 +164,9 @@ Implemented:
 - JWT-based authentication for stateful sessions
 - Role-Based Access Control (RBAC) middleware (`student`, `tutor`, `recruiter`)
 - Secure Login endpoint with credential verification
+- Logout endpoint for client-side session termination
+- Get Current User endpoint (`/me`) for profile fetching
+- JWT verification middleware for route protection
 ```
 
 ## For Open-Source Contributors
