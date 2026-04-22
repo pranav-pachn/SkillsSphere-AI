@@ -1,5 +1,5 @@
 .cta-section {
-  padding: 4rem 0 8rem;
+  padding: 4rem 1rem 8rem;
 }
 
 .cta-container {
@@ -30,6 +30,7 @@
   margin-bottom: 1rem;
   position: relative;
   z-index: 1;
+  line-height: 1.2;
 }
 
 .cta-subtitle {
@@ -41,15 +42,71 @@
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.6;
 }
 
 .cta-actions {
   position: relative;
   z-index: 1;
+  display: flex;
+  justify-content: center;
 }
 
+.cta-actions .btn {
+  min-height: 48px;
+}
+
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
+  .cta-section {
+    padding: 2.5rem 1rem 4rem;
+  }
+
+  .cta-container {
+    padding: 3rem 1.5rem;
+  }
+
   .cta-title {
     font-size: 2.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .cta-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-actions .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta-section {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .cta-container {
+    padding: 2rem 1rem;
+  }
+
+  .cta-glow {
+    width: 200px;
+    height: 200px;
+  }
+
+  .cta-title {
+    font-size: 1.5rem;
+  }
+
+  .cta-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-actions .btn {
+    width: 100%;
+    font-size: 0.95rem;
   }
 }
