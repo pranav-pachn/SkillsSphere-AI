@@ -74,22 +74,22 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-[radial-gradient(circle_at_top_left,#0f172a,#020617)] overflow-hidden relative p-5 box-border">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-[radial-gradient(circle_at_top_left,#0f172a,#020617)] overflow-hidden relative px-3 py-6 box-border">
       <div className="relative z-10 w-full max-w-[380px]">
         {/* Background glow */}
-        <div className="absolute w-[500px] h-[500px] bg-blue-500/40 rounded-full blur-[120px] -top-[150px] -left-[150px] -z-10 animate-pulse"></div>
-        <div className="absolute w-[400px] h-[400px] bg-purple-500/40 rounded-full blur-[120px] -bottom-[120px] -right-[120px] -z-10 animate-pulse"></div>
+        <div className="hidden sm:block absolute w-[500px] h-[500px] bg-blue-500/40 rounded-full blur-[120px] -top-[150px] -left-[150px] -z-10 animate-pulse"></div>
+        <div className="hidden sm:block absolute w-[400px] h-[400px] bg-purple-500/40 rounded-full blur-[120px] -bottom-[120px] -right-[120px] -z-10 animate-pulse"></div>
 
         <form
-          className="p-6 sm:p-[30px] rounded-[20px] backdrop-blur-[20px] bg-slate-900/70 border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.6)] animate-[fadeIn_0.8s_ease]"
+          className="p-4 sm:p-[30px] rounded-[20px] backdrop-blur-[20px] bg-slate-900/70 border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.6)] animate-[fadeIn_0.8s_ease] w-full"
           onSubmit={handleSubmit}
           noValidate
         >
-          <h2 className="text-center text-white mb-[24px] text-2xl font-semibold">
+          <h2 className="text-center text-white mb-5 sm:mb-6 text-xl sm:text-2xl font-semibold">
             Welcome Back
           </h2>
 
-          <div className="flex flex-col gap-4 mb-5">
+          <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-5">
             <Input
               id="email"
               type="email"
@@ -114,19 +114,19 @@ const Login = () => {
           </div>
 
           {/* Options */}
-          <div className="flex justify-between items-center text-[14px] text-slate-400 mb-4 px-1">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0 text-xs sm:text-sm text-slate-400 mb-4 px-0 sm:px-1">
             <label htmlFor="remember-me" className="flex items-center gap-2 cursor-pointer">
               <input
                 id="remember-me"
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="accent-blue-500 rounded focus:ring-2 focus:ring-blue-500"
+                className="accent-blue-500 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
               />
               Remember me
             </label>
             <Link to="/reset-password" className="text-blue-400 cursor-pointer hover:underline">
-              Forgot ?
+              Forgot?
             </Link>
           </div>
 
@@ -136,19 +136,19 @@ const Login = () => {
             fullWidth
             loading={loading}
             disabled={loading}
-            className="mt-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 border-none font-bold text-[15px] hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition-all duration-300"
+            className="mt-3 sm:mt-4 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 border-none font-bold text-sm sm:text-base hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition-all duration-300 min-h-[44px]"
           >
             Login
           </Button>
 
           {errors.form && (
             <div className="mt-3 text-center">
-              <p className="text-red-400 text-sm">{errors.form}</p>
+              <p className="text-red-400 text-xs sm:text-sm">{errors.form}</p>
               {errors.form.toLowerCase().includes("verify") && (
                 <button
                   type="button"
                   onClick={goToVerification}
-                  className="mt-2 text-sm text-blue-400 hover:underline bg-transparent border-none cursor-pointer"
+                  className="mt-2 text-xs sm:text-sm text-blue-400 hover:underline bg-transparent border-none cursor-pointer"
                 >
                   Verify your email
                 </button>
@@ -157,7 +157,7 @@ const Login = () => {
           )}
 
           {/* Footer */}
-          <p className="text-center mt-5 text-slate-400 text-[14px]">
+          <p className="text-center mt-4 sm:mt-5 text-slate-400 text-xs sm:text-sm">
             Don't have an account?{" "}
             <Link to="/register" className="text-blue-400 hover:underline">
               Sign up

@@ -108,22 +108,22 @@ const Register = () => {
   ];
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-[radial-gradient(circle_at_top_left,#0f172a,#020617)] overflow-hidden relative p-5 box-border">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-[radial-gradient(circle_at_top_left,#0f172a,#020617)] overflow-hidden relative px-3 py-6 box-border">
       <div className="relative z-10 w-full max-w-[380px]">
         {/* Background glow */}
-        <div className="absolute w-[500px] h-[500px] bg-blue-500/40 rounded-full blur-[120px] -top-[150px] -left-[150px] -z-10 animate-pulse"></div>
-        <div className="absolute w-[400px] h-[400px] bg-purple-500/40 rounded-full blur-[120px] -bottom-[120px] -right-[120px] -z-10 animate-pulse"></div>
+        <div className="hidden sm:block absolute w-[500px] h-[500px] bg-blue-500/40 rounded-full blur-[120px] -top-[150px] -left-[150px] -z-10 animate-pulse"></div>
+        <div className="hidden sm:block absolute w-[400px] h-[400px] bg-purple-500/40 rounded-full blur-[120px] -bottom-[120px] -right-[120px] -z-10 animate-pulse"></div>
 
         <form
-          className="p-6 sm:p-[30px] rounded-[20px] backdrop-blur-[20px] bg-slate-900/70 border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.6)] animate-[fadeIn_0.8s_ease]"
+          className="p-4 sm:p-[30px] rounded-[20px] backdrop-blur-[20px] bg-slate-900/70 border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.6)] animate-[fadeIn_0.8s_ease] w-full"
           onSubmit={handleSubmit}
           noValidate
         >
-          <h2 className="text-center text-white mb-[24px] text-2xl font-semibold">
+          <h2 className="text-center text-white mb-5 sm:mb-6 text-xl sm:text-2xl font-semibold">
             Create Account
           </h2>
 
-          <div className="flex flex-col gap-4 mb-5">
+          <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-5">
             <Input
               id="name"
               label="Full Name"
@@ -182,19 +182,19 @@ const Register = () => {
             fullWidth
             loading={loading}
             disabled={loading}
-            className="mt-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 border-none font-bold text-[15px] hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition-all duration-300"
+            className="mt-3 sm:mt-4 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 border-none font-bold text-sm sm:text-base hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] transition-all duration-300 min-h-[44px]"
           >
             {loading ? "Creating Account..." : "Sign Up"}
           </Button>
 
           {errors.form && (
-            <p className="text-red-400 text-center mt-3 text-sm">
+            <p className="text-red-400 text-center mt-3 text-xs sm:text-sm">
               {errors.form}
             </p>
           )}
 
           {/* Footer */}
-          <p className="text-center mt-5 text-slate-400 text-[14px]">
+          <p className="text-center mt-4 sm:mt-5 text-slate-400 text-xs sm:text-sm">
             Already have an account?{" "}
             <span
               className="text-blue-400 cursor-pointer hover:underline"
