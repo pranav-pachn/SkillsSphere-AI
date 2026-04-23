@@ -164,6 +164,62 @@ export const googleLogin = asyncHandler(async (req, res, next) => {
   });
 });
 
+// Google OAuth callback (redirect flow)
+export const googleOAuthCallback = asyncHandler(async (req, res, next) => {
+  const { code } = req.query;
+  const frontendRedirectBase = process.env.FRONTEND_URL || 'http://localhost:5173';
+
+  if (!code) {
+    return res.redirect(`${frontendRedirectBase}/auth/callback?error=${encodeURIComponent('No code received')}`);
+  }
+
+  // Exchange code for access token
+  const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      code,
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      redirect_uri: process.env.GOOGLE_CALLBACK_URL,
+      grant_type: 'authorization_code',
+    }),
+  });
+  const tokenData = await tokenRes.json();
+  const accessToken = tokenData.access_token;
+
+  if (!accessToken) {
+    return res.redirect(`${frontendRedirectBase}/auth/callback?error=${encodeURIComponent('Failed to get access token')}`);
+  }
+
+  // Get user info from Google
+  const userRes = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`);
+  const googleUser = await userRes.json();
+
+  // Find or create user in your DB
+  let user = await User.findOne({ email: googleUser.email });
+  if (!user) {
+    user = await User.create({
+      name: googleUser.name,
+      email: googleUser.email,
+      profilePic: googleUser.picture,
+      role: 'student',
+      provider: 'google',
+      isVerified: true,
+    });
+  }
+
+  // Generate your app's JWT
+  const jwtToken = jwt.sign(
+    { userId: user._id.toString(), role: user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+  );
+
+  // Redirect to frontend with ONLY the token (no user data in URL)
+  res.redirect(`${frontendRedirectBase}/auth/callback?token=${jwtToken}`);
+});
+
 // 👤 Get Current User
 export const getMe = asyncHandler(async (req, res, next) => {
   res.status(200).json({
@@ -179,3 +235,4 @@ export const logout = asyncHandler(async (req, res, next) => {
     message: "Logged out successfully",
   });
 });
+

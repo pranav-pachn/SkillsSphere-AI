@@ -219,6 +219,19 @@ const authSlice = createSlice({
       state.pendingVerificationEmail = email;
       persistPendingEmail(email);
     },
+    setOAuthData: (state, action) => {
+      const { token, user, rememberMe = true } = action.payload;
+      
+      const storage = rememberMe ? window.localStorage : window.sessionStorage;
+      storage.setItem(TOKEN_KEY, token);
+      storage.setItem(USER_KEY, JSON.stringify(user));
+      
+      state.token = token;                                                                                                                                                        
+      state.user = user;
+      state.isAuthenticated = true;
+      state.loading = false;
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -298,7 +311,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { clearAuthError, logout, setPendingVerificationEmail } =
+export const { clearAuthError, logout, setPendingVerificationEmail,setOAuthData } =
   authSlice.actions;
 
 export default authSlice.reducer;
