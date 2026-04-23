@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import ChatWidget from "../modules/ai-assistant/components/ChatWidget";
 import LandingPage from "../modules/landing/LandingPage";
 import DashboardPage from "../modules/dashboard/DashboardPage";
 import ResumeAnalyzerPage from "../modules/resume-analyzer/pages/ResumeAnalyzerPage";
@@ -39,6 +40,7 @@ function App() {
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Routes>
+      <ChatWidget />
     </div>
   );
 }
