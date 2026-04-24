@@ -9,6 +9,7 @@ import {
   skillMatchEvaluator,
 } from "./evaluatorAdapters.js";
 import { runPipeline } from "../../../../ai-ml/pipeline/runPipeline.js";
+import { getEvaluatorConfig } from "../../config/evaluatorConfig.js";
 
 const defaultDependencies = {
   parseResume,
@@ -153,26 +154,37 @@ export const analyzeResume = asyncHandler(async (req, res, next) => {
       ? parsedData.experience.join(" ")
       : parsedData.resumeText || "";
 
+  const evaluatorConfig = getEvaluatorConfig();
+  const { toggles, weights } = evaluatorConfig;
+
   const evaluators = [];
-  if (parsedData.skills?.length && jobSkills.length) {
+  if (toggles.skillMatch && parsedData.skills?.length && jobSkills.length) {
     evaluators.push(skillMatchEvaluator);
   }
-  if (trimmedJobDescription && parsedData.resumeText) {
+  if (toggles.keywordMatch && trimmedJobDescription && parsedData.resumeText) {
     evaluators.push(keywordMatchEvaluator);
   }
-  evaluators.push(experienceMatchEvaluator);
+  if (toggles.experienceMatch) {
+    evaluators.push(experienceMatchEvaluator);
+  }
 
-  const pipelineResult = await runPipeline({
-    evaluators,
-    context: {
-      parsedResume: parsedData,
-      resumeSkills: parsedData.skills || [],
-      jobSkills,
-      resumeText: parsedData.resumeText || "",
-      jobDescription: trimmedJobDescription,
-      candidateExperienceText,
-    },
-  });
+  const pipelineResult =
+    evaluators.length === 0
+      ? { score: 0, evaluators: [], breakdown: {} }
+      : await runPipeline({
+          evaluators,
+          context: {
+            parsedResume: parsedData,
+            resumeSkills: parsedData.skills || [],
+            jobSkills,
+            resumeText: parsedData.resumeText || "",
+            jobDescription: trimmedJobDescription,
+            candidateExperienceText,
+            skillWeight: weights.skillMatch,
+            keywordWeight: weights.keywordMatch,
+            experienceWeight: weights.experienceMatch,
+          },
+        });
 
   const skillMatch = toLegacySkillMatch(pipelineResult);
   const keywordMatch = toLegacyKeywordMatch(pipelineResult);

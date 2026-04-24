@@ -70,6 +70,8 @@ Implemented:
   - `src/modules/resumes/controller.js`
   - `src/middleware/uploadResume.js`
   - `src/utils/parseResume.js`
+- Evaluator configuration:
+  - `src/config/evaluatorConfig.js`
 - Static upload serving via `app.use("/uploads", ...)`
 
 Scaffolded placeholders:
