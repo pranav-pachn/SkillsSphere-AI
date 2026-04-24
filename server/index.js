@@ -8,6 +8,7 @@ import connectDB from "./src/database/db.js";
 import authRoutes from "./src/modules/auth/routes.js";
 import resumeRoutes from "./src/modules/resumes/routes.js";
 import globalErrorHandler from "./src/middleware/errorMiddleware.js";
+import { logEvaluatorConfig } from "./src/config/evaluatorConfig.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use("/uploads", express.static(path.resolve("src", "uploads")));
 
 await connectDB();
+logEvaluatorConfig();
 
 app.get("/health", (req, res) => {
   res.json({ status: "OK" });

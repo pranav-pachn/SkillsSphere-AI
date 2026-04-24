@@ -244,6 +244,15 @@ cp .env.example .env
 - `GOOGLE_CLIENT_ID`
 - `GOOGLE_CLIENT_SECRET`
 
+# Evaluator toggles and weights (optional)
+EVALUATOR_SKILL_MATCH_ENABLED=true
+EVALUATOR_KEYWORD_MATCH_ENABLED=true
+EVALUATOR_EXPERIENCE_MATCH_ENABLED=true
+EVALUATOR_SKILL_MATCH_WEIGHT=1
+EVALUATOR_KEYWORD_MATCH_WEIGHT=0.2
+EVALUATOR_EXPERIENCE_MATCH_WEIGHT=0.2
+
+## 🔐 Google OAuth Setup
 3. Keep local defaults for development:
 
 - `PORT=5000`
@@ -263,6 +272,19 @@ cp .env.example .env
 
 - `VITE_API_URL=http://localhost:5000`
 
+- `JWT_SECRET=skillsphere_dev_jwt_secret_1234567890abcdef`
+- `JWT_EXPIRES_IN=7d`
+- `EMAIL_SERVICE_MODE=console` (Use "smtp" for real emails)
+- `EMAIL_HOST=smtp.mailtrap.io`
+- `EMAIL_PORT=2525`
+- `EMAIL_USER=your_smtp_username`
+- `EMAIL_PASS=your_smtp_password`
+- `EVALUATOR_SKILL_MATCH_ENABLED=true`
+- `EVALUATOR_KEYWORD_MATCH_ENABLED=true`
+- `EVALUATOR_EXPERIENCE_MATCH_ENABLED=true`
+- `EVALUATOR_SKILL_MATCH_WEIGHT=1`
+- `EVALUATOR_KEYWORD_MATCH_WEIGHT=0.2`
+- `EVALUATOR_EXPERIENCE_MATCH_WEIGHT=0.2`
 ## 🔐 Google OAuth Setup
 
 1. Open Google Cloud Console.
