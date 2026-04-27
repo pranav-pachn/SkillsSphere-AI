@@ -88,6 +88,22 @@ SkillSphere AI aims to simplify the path from learning to hiring by giving users
 
 ---
 
+## ⚡ Quick Start (Unified Setup)
+
+To simplify setup, you can now run the entire project using root-level scripts.
+
+### Install all dependencies
+npm run install-all
+
+### Run the project (client + server together)
+npm run dev
+
+This will start:
+- Frontend (client)
+- Backend (server)
+
+> ⚠️ Backend requires environment variables to run properly. Refer to the Environment Setup section below.
+
 ## Scalable Folder Structure
 
 The following structure keeps the project modular and easy to scale for new contributors:
@@ -236,7 +252,7 @@ Automated checks run on pull requests to `main` through:
 
 These checks validate docs/workflows and, once app code is added, automatically run lint/test/build for `client`, `server`, and `ai-ml` when their dependency manifests exist.
 
-## 🚀 Running the Project
+## 🚀 Running the Project (Manual Setup)
 
 ### Client
 
@@ -255,6 +271,7 @@ npm run dev
 ```
 
 ## 🔐 Environment Variables Setup
+> ⚠️ The backend will not start without configuring the required environment variables.
 
 ### Server
 
