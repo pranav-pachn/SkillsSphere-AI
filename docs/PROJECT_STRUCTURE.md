@@ -31,8 +31,8 @@ Implemented:
 - Resume Analyzer UI flow:
   - `src/modules/resume-analyzer/components/DragDropUpload.jsx`
   - `src/modules/resume-analyzer/components/AnalysisResult.jsx`
-  - `src/modules/resume-analyzer/pages/ResumeAnalyzerPage.jsx`
-  - `src/modules/resume-analyzer/services/resumeService.js`
+  - `src/modules/resume-analyzer/pages/ResumeAnalyzerPage.jsx` (Updated: integrated Job Description input)
+  - `src/modules/resume-analyzer/services/resumeService.js` (Updated: real API integration with JD support)
 - User Profile UI:
   - `src/modules/profile/ProfilePage.jsx`
   - `src/modules/profile/components/ProfileField.jsx`
@@ -46,6 +46,7 @@ Implemented:
   - `src/shared/components/Button.jsx`
   - `src/shared/components/Input.jsx`
   - `src/shared/components/Select.jsx`
+  - `src/shared/components/TextArea.jsx` (New: Multi-line text input)
   - `src/shared/components/LoadingState.jsx`
   - `src/shared/components/ErrorState.jsx`
   - `src/shared/components/EmptyState.jsx`
@@ -79,7 +80,14 @@ Implemented:
   - `src/modules/resumes/controller.js`
   - `src/middleware/uploadResume.js`
   - `src/utils/parseResume.js`
+- Evaluator configuration:
+  - `src/config/evaluatorConfig.js`
 - Static upload serving via `app.use("/uploads", ...)`
+- Recruiter Job Posting system:
+  - `src/modules/jobs/routes.js`
+  - `src/modules/jobs/controller.js`
+  - `src/modules/jobs/service.js`
+  - `src/database/models/JobPosting.js`
 
 Scaffolded placeholders:
 
@@ -118,6 +126,11 @@ Scaffolded placeholders:
 - `POST /api/resume/analyze`: parse PDF resume, optional skill match, optional keyword relevance (`jobDescription`)
 - `GET /api/resume/result/:id`: placeholder result retrieval endpoint
 - `GET /uploads/:filename`: static file access for uploaded files
+- `POST /api/jobs`: create a new job (Recruiter only)
+- `GET /api/jobs`: list all published jobs
+- `GET /api/jobs/:id`: get job details
+- `PATCH /api/jobs/:id`: update a job (Owner Recruiter only)
+- `DELETE /api/jobs/:id`: delete a job (Owner Recruiter only)
 
 ## Notes
 

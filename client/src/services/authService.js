@@ -24,14 +24,8 @@ export const resendOtp = ({ email }) =>
     body: { email },
   });
 
-export const getCurrentUser = () => {
-  // Retrieve token from storage (authSlice stores it in localStorage or sessionStorage)
-  const token = 
-    localStorage.getItem("skillssphere.auth.token") || 
-    sessionStorage.getItem("skillssphere.auth.token");
-
-  return apiRequest("/api/auth/me", {
+export const getCurrentUser = (token) => 
+apiRequest("/api/auth/me", {
     method: "GET",
     token,
   });
-};

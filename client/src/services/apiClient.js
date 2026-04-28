@@ -67,8 +67,12 @@ export const apiRequest = async (
   };
 
   if (body !== undefined) {
-    requestHeaders["Content-Type"] = "application/json";
-    requestConfig.body = JSON.stringify(body);
+    if (body instanceof FormData) {
+      requestConfig.body = body;
+    } else {
+      requestHeaders["Content-Type"] = "application/json";
+      requestConfig.body = JSON.stringify(body);
+    }
   }
 
   if (token) {
